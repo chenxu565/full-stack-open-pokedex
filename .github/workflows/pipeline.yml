@@ -42,16 +42,16 @@ jobs:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: |
           last_commit_message=$(echo $COMMIT_MESSAGES | jq -r '.[-1]')
-          echo "::set-output name=message::$last_commit_message"
+          echo "message=$last_commit_message" >> $GITHUB_OUTPUT
 
       - name: Check for skip deploy
         id: check_for_skip
         run: |
           last_commit_message="${{ steps.last_commit.outputs.message }}"
           if [[ $last_commit_message == *"#skip"* ]]; then
-            echo "::set-output name=skip::true"
+            echo "skip=true" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=skip::false"
+            echo "skip=false" >> $GITHUB_OUTPUT
           fi 
       
       - name: Prepare to deploy to fly.io
