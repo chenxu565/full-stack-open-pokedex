@@ -36,23 +36,14 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:3000
       
-      - name: Extract last commit message
-        id: last_commit
-        env:
-          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
-        run: |
-          last_commit_message=$(echo $COMMIT_MESSAGES | jq -r '.[-1]')
-          echo "message=$last_commit_message" >> $GITHUB_OUTPUT
-
-      - name: Check for skip deploy
+      - name: Determine if deployment should be skipped
         id: check_for_skip
         run: |
-          last_commit_message="${{ steps.last_commit.outputs.message }}"
-          if [[ $last_commit_message == *"#skip"* ]]; then
+          if contains(join(github.event.commits.*.message, ' '), '#skip'); then
             echo "skip=true" >> $GITHUB_OUTPUT
           else
             echo "skip=false" >> $GITHUB_OUTPUT
-          fi 
+          fi
       
       - name: Prepare to deploy to fly.io
         uses: superfly/flyctl-actions/setup-flyctl@master
