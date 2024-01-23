@@ -35,7 +35,8 @@ jobs:
         with:
           severity: error
           text: Build failed!
-          details: ${{ github.event.commits }}
+          description: 'commit: ${{ github.sha }}'
+          details: ''
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
       - name: Test
