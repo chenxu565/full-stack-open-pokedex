@@ -37,7 +37,7 @@ jobs:
           text: Build failed!
           description: |
             commit
-            https://github.com/${{ github.repository }}/commit/${{ github.sha }}'
+            github.event.commits.url
           details: ''
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
