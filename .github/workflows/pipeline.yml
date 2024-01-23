@@ -24,7 +24,14 @@ jobs:
         env:
           COMMITS: ${{ toJson(github.event.pull_request) }}
         run: echo "$COMMITS"
+      
+      - name: Get Committer Username
+        id: get_username
+        run: echo "username=$(git log -1 --pretty=format:'%cn')" >> $GITHUB_OUTPUT  
 
+      - name: Print Committer Username
+        run: echo "The last commit was made by ${{ steps.get_username.outputs.username }}"
+        
       - uses: actions/setup-node@v4      
         with:          
           node-version: '20'
@@ -43,7 +50,7 @@ jobs:
           text: Build failed!
           description: |
             commit
-            ${{ github.event.commits[0].url }}
+            https://github.com/${{ github.repository }}/commit/${{ github.event.pull_request.head.sha }} by ${{ github.actor }}
           details: ''
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
