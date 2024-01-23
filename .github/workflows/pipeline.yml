@@ -37,7 +37,7 @@ jobs:
           text: Build failed!
           description: |
             commit
-            github.event.commits.url
+            ${{ github.event.commits[0].url }}
           details: ''
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
