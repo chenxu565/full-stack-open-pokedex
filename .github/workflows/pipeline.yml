@@ -27,7 +27,9 @@ jobs:
       
       - name: Get Committer Username
         id: get_username
-        run: echo "username=$(git log -1 --pretty=format:'%cn')" >> $GITHUB_OUTPUT  
+        run: |
+          echo "username=$(git log -1 --pretty=format:'%cn')" >> $GITHUB_OUTPUT  
+          cat $GITHUB_OUTPUT  # For debugging
 
       - name: Print Committer Username
         run: echo "The last commit was made by ${{ steps.get_username.outputs.username }}"
@@ -50,7 +52,7 @@ jobs:
           text: Build failed!
           description: |
             commit
-            https://github.com/${{ github.repository }}/commit/${{ github.event.pull_request.head.sha }} by ${{ github.actor }}
+            https://github.com/${{ github.repository }}/commit/${{ github.event.pull_request.head.sha }} by ${{ github.actor }} broke the build.
           details: ''
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
