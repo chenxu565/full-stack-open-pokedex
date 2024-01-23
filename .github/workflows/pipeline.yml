@@ -85,7 +85,14 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha}}
           fetch-depth: '0'
-          
+      
+      - name: Get Committer Username
+        id: get_username
+        run: |
+          COMMITTER_NAME=$(git log -2 --pretty=format:'%cn' | tail -n 1)
+          echo "Committer Name: $COMMITTER_NAME"
+          echo "username=$COMMITTER_NAME" >> $GITHUB_OUTPUT
+
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.67.0
         env:
@@ -99,5 +106,5 @@ jobs:
           severity: info
           text: A new version of Pokedex deployed!
           description: |
-            to ${{ needs.simple_deployment_pipeline.outputs.deployed_url }} by ${{ needs.simple_deployment_pipeline.outputs.committer_name }}.
+            to ${{ needs.simple_deployment_pipeline.outputs.deployed_url }} by ${{ steps.get_username.outputs.username }}.
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
