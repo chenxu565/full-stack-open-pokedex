@@ -33,7 +33,15 @@ jobs:
 
       - name: Print Committer Username
         run: echo "The last commit was made by ${{ steps.get_username.outputs.username }}"
-        
+      
+      - name: Debug Git Info
+        run: |
+          echo "Current Branch:"
+          git branch --show-current
+          echo "Latest Commits:"
+          git log -5 --pretty=oneline
+      
+
       - uses: actions/setup-node@v4      
         with:          
           node-version: '20'
