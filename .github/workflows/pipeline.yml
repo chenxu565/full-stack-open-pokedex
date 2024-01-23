@@ -20,38 +20,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2  # Fetches all history
+          fetch-depth: 2
     
-
-      - name: Test to see commits
-        env:
-          COMMITS: ${{ toJson(github.event.pull_request) }}
-        run: echo "$COMMITS"
-      
       - name: Get Committer Username
         id: get_username
         run: |
           COMMITTER_NAME=$(git log -2 --pretty=format:'%cn' | tail -n 1)
           echo "Committer Name: $COMMITTER_NAME"
           echo "username=$COMMITTER_NAME" >> $GITHUB_OUTPUT
-          cat $GITHUB_OUTPUT  # For debugging
-
-      - name: Print Committer Username
-        run: echo "The last commit was made by ${{ steps.get_username.outputs.username }}"
       
-      - name: Debug Git Info
-        run: |
-          echo "Current Branch:"
-          git branch --show-current
-          echo "Latest Commits:"
-          git log -5 --pretty=oneline
-      
-      - name: Log Recent Commits
-        run: git log -10 --pretty=oneline
-
-
-
-
       - uses: actions/setup-node@v4      
         with:          
           node-version: '20'
@@ -70,7 +47,7 @@ jobs:
           text: Build failed!
           description: |
             commit
-            https://github.com/${{ github.repository }}/commit/${{ github.event.pull_request.head.sha }} by ${{ github.actor }} broke the build.
+            https://github.com/${{ github.repository }}/commit/${{ github.event.pull_request.head.sha }} by ${{ steps.get_username.outputs.username }} broke the build.
           details: ''
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
