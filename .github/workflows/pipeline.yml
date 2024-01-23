@@ -26,7 +26,7 @@ jobs:
       - name: Get Committer Username
         id: get_username
         run: |
-          COMMITTER_NAME=$(git log -2 --pretty=format:'%cn' | tail -n 1)
+          COMMITTER_NAME=$(git log -1 --pretty=format:'%an' | tail -n 1)
           echo "Committer Name: $COMMITTER_NAME"
           echo "username=$COMMITTER_NAME" >> $GITHUB_OUTPUT
       
@@ -39,7 +39,7 @@ jobs:
         run: npm run eslint
       - name: Build
         id: build
-        run: npm run build
+        run: exit 1 #run: npm run build
       - name: Broadcast to Discord if build failed
         if: ${{ failure() && steps.build.outcome == 'failure' }}
         uses: rjstone/discord-webhook-notify@v1
