@@ -27,7 +27,16 @@ jobs:
       - name: Check style
         run: npm run eslint
       - name: Build
-        run: npm run build
+        id: build
+        run: exit 1 # simulate build failure
+      - name: Broadcast to Discord if build failed
+        if: ${{ failure() && steps.build.outcome == 'failure' }}
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: error
+          details: Build failed!
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
       - name: Test
         run: npm run test
 
