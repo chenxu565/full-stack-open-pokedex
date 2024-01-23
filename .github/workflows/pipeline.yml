@@ -17,7 +17,6 @@ jobs:
       SKIP_DEPLOY: ${{ contains(join(github.event.commits.*.message, ' '), '#skip') && 'true' || 'false' }}
     outputs:
       skip_deploy: ${{ env.SKIP_DEPLOY }}
-      committer_name: ${{ steps.get_username.outputs.username }}
       deployed_url: ${{ steps.deploy.outputs.deployed_url }}
     steps:
       - uses: actions/checkout@v4
