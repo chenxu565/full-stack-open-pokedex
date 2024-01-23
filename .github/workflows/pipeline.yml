@@ -19,6 +19,12 @@ jobs:
       skip_deploy: ${{ env.SKIP_DEPLOY }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Test to see commits
+        env:
+          COMMITS: ${{ toJson(github.event.pull_request) }}
+        run: echo "$COMMITS"
+
       - uses: actions/setup-node@v4      
         with:          
           node-version: '20'
