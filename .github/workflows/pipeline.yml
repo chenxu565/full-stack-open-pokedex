@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Fetches all history
+          fetch-depth: 2  # Fetches all history
     
 
       - name: Test to see commits
