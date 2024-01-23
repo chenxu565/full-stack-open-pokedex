@@ -21,12 +21,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 5
     
       - name: Get Committer Username
         id: get_username
         run: |
-          COMMITTER_NAME=$(git log -2 --pretty=format:'%cn' | tail -n 1)
+          git log -5
+          COMMITTER_NAME=$(git log -2 --pretty=format:'%an' | tail -n 1)
           echo "Committer Name: $COMMITTER_NAME"
           echo "username=$COMMITTER_NAME" >> $GITHUB_OUTPUT
       
@@ -88,7 +89,8 @@ jobs:
       - name: Get Committer Username
         id: get_username
         run: |
-          COMMITTER_NAME=$(git log -2 --pretty=format:'%cn' | tail -n 1)
+          git log -5
+          COMMITTER_NAME=$(git log -2 --pretty=format:'%an' | tail -n 1)
           echo "Committer Name: $COMMITTER_NAME"
           echo "username=$COMMITTER_NAME" >> $GITHUB_OUTPUT
 
