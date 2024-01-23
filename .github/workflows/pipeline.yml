@@ -90,7 +90,7 @@ jobs:
         id: get_username
         run: |
           git log -5
-          COMMITTER_NAME=$(git log -2 --pretty=format:'%an' | tail -n 1)
+          COMMITTER_NAME=$(git log -1 --pretty=format:'%an' | tail -n 1)
           echo "Committer Name: $COMMITTER_NAME"
           echo "username=$COMMITTER_NAME" >> $GITHUB_OUTPUT
 
