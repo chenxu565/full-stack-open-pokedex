@@ -19,6 +19,9 @@ jobs:
       skip_deploy: ${{ env.SKIP_DEPLOY }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetches all history
+    
 
       - name: Test to see commits
         env:
