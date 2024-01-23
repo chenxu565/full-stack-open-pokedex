@@ -43,6 +43,11 @@ jobs:
           echo "Latest Commits:"
           git log -5 --pretty=oneline
       
+      - name: Log Recent Commits
+        run: git log -10 --pretty=oneline
+
+
+
 
       - uses: actions/setup-node@v4      
         with:          
