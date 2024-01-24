@@ -1,14 +1,8 @@
 name: Schedule health check
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches: [ main ]
-    types: [ opened, synchronize ]
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '20 20 * * *'
 
 jobs:
   check-health:
