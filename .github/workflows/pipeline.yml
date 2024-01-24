@@ -23,6 +23,14 @@ jobs:
         with:
           fetch-depth: 5
     
+      - name: Print commit messages
+        run: |
+          echo "Commit Messages:"
+          for commit in ${{ toJson(github.event.commits) }}
+          do
+            echo $commit.message
+          done
+          
       - name: Get Committer Username
         id: get_username
         run: |
