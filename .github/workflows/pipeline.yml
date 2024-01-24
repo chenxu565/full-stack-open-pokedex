@@ -23,15 +23,11 @@ jobs:
         with:
           fetch-depth: 5
     
-      - name: Print GitHub event
-        run: |
-          echo "GitHub Event:"
-          echo '${{ toJson(github.event) }}'
-
-      - name: Print commit messages
+      - name: Print commit messages and check for skip
         run: |
           echo "Commit Messages:"
-          echo '${{ toJson(github.event.commits) }}' | jq -r '.[] | .message'
+          echo '${{ toJson(github.event.commits.*.message) }}'
+          echo "SKIP_DEPLOY: ${{ env.SKIP_DEPLOY }}"
   
       - name: Get Committer Username
         id: get_username
