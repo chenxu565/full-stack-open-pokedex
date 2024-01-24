@@ -23,6 +23,12 @@ jobs:
         with:
           fetch-depth: 5
     
+      - name: Print commit messages and check for skip
+        run: |
+          echo "Commit Messages:"
+          echo '${{ toJson(github.event.commits.*.message) }}'
+          echo "SKIP_DEPLOY: ${{ env.SKIP_DEPLOY }}"
+  
       - name: Get Committer Username
         id: get_username
         run: |
