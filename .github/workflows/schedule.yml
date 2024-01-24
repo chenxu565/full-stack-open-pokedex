@@ -8,7 +8,7 @@ on:
     branches: [ main ]
     types: [ opened, synchronize ]
   schedule:
-    - cron: '5 * * * *'
+    - cron: '*/5 * * * *'
 
 jobs:
   check-health:
