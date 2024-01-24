@@ -2,7 +2,7 @@ name: Schedule health check
 
 on:
   schedule:
-    - cron: '20 20 * * *'
+    - cron: '35 18 * * *'
 
 jobs:
   check-health:
