@@ -22,7 +22,7 @@ jobs:
       - name: Get the deployed service URL
         id: get-url
         run: |
-          URL = $(flyctl status | grep 'Hostname' | awk '{print "https://"$3}')
+          URL=$(flyctl status | grep 'Hostname' | awk '{print "https://"$3}')
           echo "deployed_url=$URL" >> $GITHUB_OUTPUT
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
